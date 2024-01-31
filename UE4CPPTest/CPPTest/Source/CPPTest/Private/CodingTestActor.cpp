@@ -17,7 +17,7 @@ void ACodingTestActor::BeginPlay()
 	Super::BeginPlay();
 
 	// Hello World 출력하기
-	//UE_LOG(LogTemp, Warning, TEXT("Hello World"));
+	//UE_LOG(LogTemp, Warning, TEXT("Hello World")); 
 	UE_LOG(LogTemp, Warning, TEXT("%d"), number1);
 }
 
