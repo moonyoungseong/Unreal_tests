@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "CodingTestActor.generated.h"
 
+
+// 헤더파일에서 변수,함수 선언하고 사용한다.
 UCLASS()
 class CPPTEST_API ACodingTestActor : public AActor
 {
