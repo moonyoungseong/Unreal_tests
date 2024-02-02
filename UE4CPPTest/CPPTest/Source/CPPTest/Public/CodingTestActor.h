@@ -8,6 +8,7 @@
 
 
 // 헤더파일에서 변수,함수 선언하고 사용한다.
+
 UCLASS()
 class CPPTEST_API ACodingTestActor : public AActor
 {
@@ -27,5 +28,8 @@ public:
 
 	// 정수형 int32로 int도 가능한데 나중에 사용하는 기능에 제약 생김 
 	int32 number1 = 85;
-	int32 number2 = 90;
+	float number2 = 3.14f;
+	FString name = "Moon0sung";
+	bool isReady = true;
+	bool isFinished = false;
 };
