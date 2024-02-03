@@ -29,7 +29,7 @@ public:
 	// 정수형 int32로 int도 가능한데 나중에 사용하는 기능에 제약 생김 
 	int32 number1 = 85;
 	float number2 = 3.14f;
-	FString name = "Moon0sung";
+	FString name = "Moon0sung";	// 문자열 변수는 좀 다르다. 나중에 공부
 	bool isReady = true;
 	bool isFinished = false;
 };
