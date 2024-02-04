@@ -27,9 +27,21 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// 정수형 int32로 int도 가능한데 나중에 사용하는 기능에 제약 생김 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 number1 = 85;
-	float number2 = 3.14f;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly) // 블루 프린트창에서 수정
+	int number2 = 33;
+
+	UPROPERTY(EditInstanceOnly)
 	FString name = "Moon0sung";	// 문자열 변수는 좀 다르다. 나중에 공부
+
+	UPROPERTY(Editanywhere)
 	bool isReady = true;
 	bool isFinished = false;
+
+	// 더하기 함수 선언
+	UFUNCTION(BlueprintCallable)
+	int32 Add(int32 num1, int32 num2);
 };
