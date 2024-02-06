@@ -15,7 +15,11 @@ void AAccessTest::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	ACodingTestActor testActor;
+	number = 200;
+	numPointer = &number;
+
+	UE_LOG(LogTemp, Warning, TEXT("변수의 값: %d"), number);
+	UE_LOG(LogTemp, Warning, TEXT("포인터의 값: %d"), *numPointer);
 }
 
 // Called every frame

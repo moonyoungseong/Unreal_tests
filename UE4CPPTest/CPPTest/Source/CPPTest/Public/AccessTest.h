@@ -23,4 +23,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	int32 number;		// 일반 변수
+	int32* numPointer;	// 포인터 변수
 };

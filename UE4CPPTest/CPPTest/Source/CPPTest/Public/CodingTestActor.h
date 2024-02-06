@@ -22,12 +22,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// 정수형 int32로 int도 가능한데 나중에 사용하는 기능에 제약 생김 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 number1 = 85;
 
