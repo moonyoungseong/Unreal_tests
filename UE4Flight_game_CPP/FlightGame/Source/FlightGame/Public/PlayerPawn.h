@@ -33,4 +33,16 @@ public:
 	// 스태틱 메시 컴포넌트
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;
+
+	// 속력 변수
+	float moveSpeed = 500;
+
+private:
+	// 키 입력 받을 변수
+	float h;
+	float v;
+
+	// 사용자 입력 처리 함수
+	void MoveHorizontal(float value);
+	void MoveVertical(float value);
 };

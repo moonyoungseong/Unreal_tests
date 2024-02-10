@@ -40,12 +40,36 @@ void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// 1. 상하 입력 값과 좌우 입력 값을 이용해서 방향 벡터를 만든다.
+	FVector dir = FVector(0, h, v);
+
+	// 2. 방향 벡터의 길이가 1이 되도록 벡터를 정규화 한다.
+	dir.Normalize();
+
+	// 3. 이동할 위치 좌표를 구한다.
+	FVector newLocation = GetActorLocation() + dir * moveSpeed * DeltaTime;
+
+	// 4. 현재 액터의 위치좌표를 새좌표로 변경
+	SetActorLocation(newLocation);
 }
 
-// Called to bind functionality to input
+// 기능을 입력에 연결하기 위해 호출됨
 void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// Axis 바인딩 된 값 함수에 연결
+	PlayerInputComponent->BindAxis("Horizontal", this, &APlayerPawn::MoveHorizontal);
+	PlayerInputComponent->BindAxis("Vertical", this, &APlayerPawn::MoveVertical);
+}
+
+void APlayerPawn::MoveHorizontal(float value)
+{
+	h = value;
+}
+
+void APlayerPawn::MoveVertical(float value)
+{
+	v = value;
 }
 
