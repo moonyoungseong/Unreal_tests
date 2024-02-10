@@ -1,0 +1,20 @@
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+# .obj 파일을 LFS로 관리
+*.obj filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.anim filter=lfs diff=lfs merge=lfs -text
+*.prefab filter=lfs diff=lfs merge=lfs -text
+*.mat filter=lfs diff=lfs merge=lfs -text
+
+ Unreal Engine assets
+*.uasset filter=lfs diff=lfs merge=lfs -text
+*.umap filter=lfs diff=lfs merge=lfs -text
+
+# Configuration files
+*.ini filter=lfs diff=lfs merge=lfs -text
+
+# 작업중에 추가로 추적할것 적어놓자.
+# 유니티랑 언리얼 에셋 확장자가 다르다.
+# 오류나서 전부 삭제 후 다시 클론. 완성은 해서 유튜브 올림
