@@ -6,6 +6,6 @@
 
 ATPSProjectGameModeBase::ATPSProjectGameModeBase()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *CALLINFO);
+	PRINT_LOG(TEXT("My Log : %s"), TEXT("TPS project!!"));
 }
 
