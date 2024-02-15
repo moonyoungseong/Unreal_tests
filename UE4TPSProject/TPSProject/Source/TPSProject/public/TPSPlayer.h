@@ -57,4 +57,11 @@ public:
 	// ÃÑ ½ºÄÌ·¹Å» ¸Þ½Ã
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 		class USkeletalMeshComponent* gunMeshComp;
+
+	// ÃÑ¾Ë °øÀå
+	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
+		TSubclassOf<class ABullet> bulletFactory;
+
+	// ÃÑ¾Ë ¹ß»ç Ã³¸® ÇÔ¼ö
+	void InputFire();
 };

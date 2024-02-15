@@ -2,6 +2,7 @@
 
 
 #include "TPSPlayer.h"
+#include "Bullet.h"
 #include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
 
@@ -31,7 +32,7 @@ ATPSPlayer::ATPSPlayer()
 	tpsCamComp->bUsePawnControlRotation = false;
 
 	bUseControllerRotationYaw = true;
-
+	
 	// 4. 총 스켈레탈메시 컴포넌트 등록
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
 	// 4-1. 부모 컴포넌트를 Mesh 컴포넌트로 설정
@@ -46,22 +47,6 @@ ATPSPlayer::ATPSPlayer()
 		// 4-5. 위치 조정하기
 		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
 	}
-
-	/*
-	// 4. 총 스켈레탈메시 컴포넌트 등록
-	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
-	// 4-1. 부모 컴포넌트를 Mesh 컴포넌트로 설정
-	gunMeshComp->SetupAttachment(GetMesh());
-	// 4-2. 스켈레탈 메시 데이터 로드
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempGunMesh(TEXT("SkeletalMesh'/Game/FPWeapon/Mesh/SK_FPGun.SK_FPGun'"));
-	// 4-3 데이터 로드가 성공했다면
-	if (TempGunMesh.Succeeded())
-	{
-		// 4-4. 스켈레탈 메시 데이터 할당
-		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
-		// 4-5. 위치 조정하기
-		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
-	}*/
 }
 
 // Called when the game starts or when spawned
@@ -93,6 +78,16 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 	// 점프 입력 이벤트 처리 함수 바인딩
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ATPSPlayer::InputJump);
+
+	// 총알 발사 이벤트 처리 함수 바인딩
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
+}
+
+void ATPSPlayer::InputFire()
+{
+	// 총알 발사 처리
+	FTransform firePosition = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
+	GetWorld()->SpawnActor<ABullet>(bulletFactory, firePosition);
 }
 
 void ATPSPlayer::Move()
