@@ -34,4 +34,7 @@ public:
 	// 외관 컴포넌트
 	UPROPERTY(VisibleAnywhere, Category = BodyMesh)
 		class UStaticMeshComponent* bodyMeshComp;
+
+	// 총알 제거 함수
+	void Die();
 };
