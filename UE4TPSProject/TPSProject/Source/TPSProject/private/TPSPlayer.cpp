@@ -47,13 +47,32 @@ ATPSPlayer::ATPSPlayer()
 		// 4-5. 위치 조정하기
 		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
 	}
+
+	// 5. 스나이퍼건 컴포너트 등록
+	sniperGunComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SniperGunComp"));
+	// 5-1. 부모 컴포넌트를 Mesh 컴포넌트로 설정
+	sniperGunComp->SetupAttachment(GetMesh());
+	// 5-2. 스태틱메시 데이터 로드
+	ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("StaticMesh'/Game/SniperGun/sniper1.sniper1'"));
+	// 5-3. 데이터로드가 성공했다면
+	if (TempSniperMesh.Succeeded())
+	{
+		// 5-4. 스태틱메시 데이터 할당
+		sniperGunComp->SetStaticMesh(TempSniperMesh.Object);
+		// 5-5. 위치 조정하기
+		sniperGunComp->SetRelativeLocation(FVector(-22, 55, 120));
+		// 5-6. 크기 조정하기
+		sniperGunComp->SetRelativeScale3D(FVector(0.15f));
+	}
 }
 
 // Called when the game starts or when spawned
 void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	// 기본으로 스나이퍼건을 사용하도록 설정
+	ChangeToSniperGun();
 }
 
 // Called every frame
@@ -81,6 +100,10 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	// 총알 발사 이벤트 처리 함수 바인딩
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
+
+	// 총 교체 이벤트 처리 함수 바인딩
+	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &ATPSPlayer::ChangeToGrenadeGun);
+	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeToSniperGun);
 }
 
 void ATPSPlayer::InputFire()
@@ -122,5 +145,22 @@ void ATPSPlayer::Turn(float value)
 void ATPSPlayer::LookUp(float value)
 {
 	AddControllerPitchInput(value);
+}
+
+// 유탄총으로 변경
+void ATPSPlayer::ChangeToGrenadeGun()
+{
+	// 유탄총 사용 중으로 체크
+	bUsingGrenadeGun = true;
+	sniperGunComp->SetVisibility(false);
+	gunMeshComp->SetVisibility(true);
+}
+
+// 스나이퍼건으로 변경
+void ATPSPlayer::ChangeToSniperGun()
+{
+	bUsingGrenadeGun = false;
+	sniperGunComp->SetVisibility(true);
+	gunMeshComp->SetVisibility(false);
 }
 

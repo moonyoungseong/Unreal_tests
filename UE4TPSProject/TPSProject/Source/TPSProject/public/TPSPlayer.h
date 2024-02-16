@@ -64,4 +64,15 @@ public:
 
 	// 총알 발사 처리 함수
 	void InputFire();
+
+	// 스나이퍼건 스태틱메시 추가
+	UPROPERTY(VisibleAnywhere, Category = GunMesh)
+		class UStaticMeshComponent* sniperGunComp;
+
+	// 유탄총 사용 중인지 여부
+	bool bUsingGrenadeGun = true;
+	// 유탄총으로 변경
+	void ChangeToGrenadeGun();
+	// 스나이퍼건으로 변경
+	void ChangeToSniperGun();
 };
