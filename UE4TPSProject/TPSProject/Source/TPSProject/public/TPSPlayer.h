@@ -29,7 +29,7 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* springArmComp;
-	UPROPERTY(VisibleAnywhere, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* tpsCamComp;
 
 	// 좌우 회전 입력처리
@@ -75,4 +75,14 @@ public:
 	void ChangeToGrenadeGun();
 	// 스나이퍼건으로 변경
 	void ChangeToSniperGun();
+
+	// 스나이퍼 조준
+	void SniperAim();
+	// 스나이퍼 조준 중인지 여부
+	bool bSniperAim = false;
+	// 스나이퍼 UI 위젯 공장
+	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
+		TSubclassOf<class UUserWidget> sniperUIFactory;
+	// 스나이퍼 UI 위젯 인스턴스
+	class UUserWidget* _sniperUI;
 };

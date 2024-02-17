@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include <GameFramework/SpringArmComponent.h>
 #include <Camera/CameraComponent.h>
+#include <Blueprint/UserWidget.h>
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -71,6 +72,9 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 1. 스나이퍼 UI 위젯 인스턴스 생성
+	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);
+
 	// 기본으로 스나이퍼건을 사용하도록 설정
 	ChangeToSniperGun();
 }
@@ -104,6 +108,10 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	// 총 교체 이벤트 처리 함수 바인딩
 	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &ATPSPlayer::ChangeToGrenadeGun);
 	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeToSniperGun);
+
+	// 스나이퍼 조준 모드 이벤트 처리 함수 바인딩
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperAim);
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
 }
 
 void ATPSPlayer::InputFire()
@@ -162,5 +170,34 @@ void ATPSPlayer::ChangeToSniperGun()
 	bUsingGrenadeGun = false;
 	sniperGunComp->SetVisibility(true);
 	gunMeshComp->SetVisibility(false);
+}
+
+void ATPSPlayer::SniperAim()
+{
+	// 스나이퍼건 모드가 아니라면 처리하지 않는다.
+	if (bUsingGrenadeGun)
+	{
+		return;
+	}
+	// Pressed 입력 처리
+	if (bSniperAim == false)
+	{
+		// 1. 스나이퍼 조준 모드 활성화
+		bSniperAim = true;
+		// 2. 스나이퍼 조준 UI등록
+		_sniperUI->AddToViewport();
+		// 3. 카메라의 시야각 field of view 설정
+		tpsCamComp->SetFieldOfView(45.0f);
+	}
+	// Released 입력 처리
+	else
+	{
+		// 1. 스나이퍼 조준 모드 비활성화
+		bSniperAim = false;
+		// 2.스나이퍼 조준 UI 화면에서 제거
+		_sniperUI->RemoveFromParent();
+		// 3. 카메라 시야각 원래대로 복원
+		tpsCamComp->SetFieldOfView(90.0f);
+	}
 }
 
