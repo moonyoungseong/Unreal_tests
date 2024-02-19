@@ -85,4 +85,8 @@ public:
 		TSubclassOf<class UUserWidget> sniperUIFactory;
 	// 스나이퍼 UI 위젯 인스턴스
 	class UUserWidget* _sniperUI;
+
+	// 총알 파편 효과 공장
+	UPROPERTY(EditAnywhere, Category = BulletEffect)
+		class UParticleSystem* bulletEffectFactory;
 };
