@@ -2,6 +2,9 @@
 
 
 #include "EnemyFSM.h"
+#include "TPSPlayer.h"
+#include "Enemy.h"
+#include <Kismet/GameplayStatics.h>
 
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
@@ -19,8 +22,12 @@ void UEnemyFSM::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	// 월드에서 APTSPlayer타깃 찾아오기
+	auto actor = UGameplayStatics::GetActorOfClass(GetWorld(), ATPSPlayer::StaticClass());
+	// ATPSPlayer 타입으로 캐스팅
+	target = Cast<ATPSPlayer>(actor);
+	// 소유 객체 가져오기
+	me = Cast<AEnemy>(GetOwner());
 }
 
 
@@ -66,7 +73,15 @@ void UEnemyFSM::IdleState()
 	}
 }
 // 이동상태
-void UEnemyFSM::MoveState() {}
+void UEnemyFSM::MoveState() 
+{
+	// 1. 타깃 목적지가 필요하다.
+	FVector destination = target->GetActorLocation();
+	// 2. 방향이 필요하다.
+	FVector dir = destination - me->GetActorLocation();
+	// 3. 방향으로 이동하고 싶다.
+	me->AddMovementInput(dir.GetSafeNormal());
+}
 // 공격상태
 void UEnemyFSM::AttackState() {}
 // 피격상태

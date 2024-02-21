@@ -22,7 +22,7 @@ AEnemy::AEnemy()
 	}
 
 	// EnemyFSM 컴포넌트 추가
-	fsm2 = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
+	fsm1 = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
 }
 
 // Called when the game starts or when spawned

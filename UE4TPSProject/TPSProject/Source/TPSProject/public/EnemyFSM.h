@@ -55,4 +55,12 @@ public:
 		float idleDelayTime = 2.0f;
 	// 경과 시간
 	float currentTime = 0.0f;
+
+	// 타깃
+	UPROPERTY(VisibleAnywhere, Category = FSM)
+		class ATPSPlayer* target;
+
+	// 소유 액터
+	UPROPERTY()
+		class AEnemy* me;
 };
