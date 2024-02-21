@@ -51,8 +51,8 @@ public:
 	void DieState();
 
 	// 대기 시간
-	/*UPROPERTY(EditDefaultsOnly, Category = FSM)
-		float idleDelayTime = 2;
+	UPROPERTY(EditDefaultsOnly, Category = FSM)
+		float idleDelayTime = 2.0f;
 	// 경과 시간
-	float currentTime = 0;*/
+	float currentTime = 0.0f;
 };

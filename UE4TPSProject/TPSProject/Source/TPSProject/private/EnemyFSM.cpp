@@ -53,7 +53,7 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 // 대기 상태
 void UEnemyFSM::IdleState() 
-{/*
+{
 	// 1. 시간이 흘렀으니까
 	currentTime += GetWorld()->DeltaTimeSeconds;
 	// 2. 만약 경과 시간이 대기 시간을 초월했다면
@@ -63,7 +63,7 @@ void UEnemyFSM::IdleState()
 		mState = EEnemyState::Move;
 		// 경과시간 초과
 		currentTime = 0;
-	}*/
+	}
 }
 // 이동상태
 void UEnemyFSM::MoveState() {}
