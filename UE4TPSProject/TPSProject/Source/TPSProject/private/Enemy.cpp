@@ -2,6 +2,7 @@
 
 
 #include "Enemy.h"
+#include "EnemyFSM.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -19,6 +20,9 @@ AEnemy::AEnemy()
 		// 1-3. 메시 위치 및 회전 설정
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0, 0, -88), FRotator(0, -90, 0));
 	}
+
+	// EnemyFSM 컴포넌트 추가
+	fsm = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
 }
 
 // Called when the game starts or when spawned
