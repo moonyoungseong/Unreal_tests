@@ -49,4 +49,10 @@ public:
 	void DamageState();
 	// 죽음 상태
 	void DieState();
+
+	// 대기 시간
+	/*UPROPERTY(EditDefaultsOnly, Category = FSM)
+		float idleDelayTime = 2;
+	// 경과 시간
+	float currentTime = 0;*/
 };
