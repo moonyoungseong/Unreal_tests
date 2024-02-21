@@ -63,4 +63,23 @@ public:
 	// 소유 액터
 	UPROPERTY()
 		class AEnemy* me;
+
+	// 공격 범위
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float attackRange = 150.0f;
+
+	// 공격 대기 시간
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float attackDelayTime = 2.0f;
+
+	// 피격 알림 이벤트 함수
+	void OnDamageProcess();
+
+	//체력
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = FSM)
+		int32 hp = 3;
+	
+	// 피격 대기 시간
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float damageDelayTime = 2.0f;
 };

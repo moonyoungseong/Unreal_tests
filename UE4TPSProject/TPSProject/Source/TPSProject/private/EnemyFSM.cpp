@@ -5,6 +5,7 @@
 #include "TPSPlayer.h"
 #include "Enemy.h"
 #include <Kismet/GameplayStatics.h>
+#include <TPSProject.h>
 
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
@@ -81,13 +82,73 @@ void UEnemyFSM::MoveState()
 	FVector dir = destination - me->GetActorLocation();
 	// 3. 방향으로 이동하고 싶다.
 	me->AddMovementInput(dir.GetSafeNormal());
+
+	// 타깃과 가까워지면 공격 상태로 전환하고 싶다.
+	// 1. 만약 거리가 공격 범위 안에 들어오면
+	if (dir.Size() < attackRange)
+	{
+		// 2. 공격 상태로 전환하고 싶다.
+		mState = EEnemyState::Attack;
+	}
 }
 // 공격상태
-void UEnemyFSM::AttackState() {}
+void UEnemyFSM::AttackState() 
+{
+	// 목표: 일정 시간에 한 번씩 공격하고 싶다.
+	// 1. 시간이 흘러야 한다.
+	currentTime += GetWorld()->DeltaTimeSeconds;
+	// 2. 공격시간이 됐으니까
+	if (currentTime > attackDelayTime)
+	{
+		// 3. 공격하고 싶다.
+		PRINT_LOG(TEXT("Attack!!!!!!"));
+		// 경과시간 초기화
+		currentTime = 0;
+	}
+
+	// 목표: 타깃이 공격 범위를 벗어나면 상태를 이동으로 전환하고 싶다.
+	// 1. 타깃과의 거리가 필요하다.
+	float distance = FVector::Distance(target->GetActorLocation(), me->GetActorLocation());
+	// 2. 타깃과의 거리가 공격 범위를 벗어났으니까
+	if (distance > attackRange)
+	{
+		// 3. 상태를 이동으로 전환하고 싶다.
+		mState = EEnemyState::Move;
+	}
+}
 // 피격상태
-void UEnemyFSM::DamageState() {}
+void UEnemyFSM::DamageState()
+{
+	// 1. 시간이 흘렀으니까
+	currentTime += GetWorld()->DeltaTimeSeconds;
+	// 2. 만약 경과 시간이 대기시간을 초과했다면
+	if (currentTime > damageDelayTime)
+	{
+		// 3. 대기 상태로 전환하고 싶다.
+		mState = EEnemyState::Idle;
+		// 경과 시간 초기화
+		currentTime = 0;
+	}
+}
 // 죽음 상태
 void UEnemyFSM::DieState() {}
 
+void UEnemyFSM::OnDamageProcess()
+{
+	// 체력 감소
+	hp--;
 
+	// 만약 체력이 남아있다면
+	if (hp > 0)
+	{
+		// 상태를 피격으로 전환
+		mState = EEnemyState::Damage;
+	}
+	// 그렇지 않다면
+	else
+	{
+		// 상태를 죽음으로 전환
+		mState = EEnemyState::Die;
+	}
+}
 
