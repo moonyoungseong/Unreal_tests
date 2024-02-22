@@ -21,4 +21,8 @@ public:
 
 	// 매 프레임 갱신되는 함수
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	// 플레이어가 공중에 있는지 여부
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim)
+		bool isInAir = false;
 };
