@@ -18,4 +18,7 @@ public:
 	// 플레이어 이동 속도
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim)
 		float speed = 0;
+
+	// 매 프레임 갱신되는 함수
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 };
