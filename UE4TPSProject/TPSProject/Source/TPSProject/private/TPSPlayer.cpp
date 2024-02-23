@@ -8,6 +8,8 @@
 #include <Blueprint/UserWidget.h>
 #include <Kismet/GameplayStatics.h>
 #include "EnemyFSM.h"
+#include <GameFramework/CharacterMovementComponent.h>
+#include "PlayerAnim.h"
 
 // Sets default values
 ATPSPlayer::ATPSPlayer()
@@ -74,6 +76,9 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// 초기 속도를 걷기로 설정
+	GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
+
 	// 1. 스나이퍼 UI 위젯 인스턴스 생성
 	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);
 	// 2. 일반 조준 UI 크로스헤어 인스턴스 생성
@@ -118,6 +123,29 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	// 스나이퍼 조준 모드 이벤트 처리 함수 바인딩
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperAim);
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
+
+	// 달리기 입력 이벤트 처리 함수 바인딩
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ATPSPlayer::InputRun);
+	PlayerInputComponent->BindAction(TEXT("Run"), IE_Released, this, &ATPSPlayer::InputRun);
+}
+
+void ATPSPlayer::InputRun()
+{
+	// 공격 애니메이션 재생
+	auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
+	anim->PlayAttackAnim();
+
+	auto movement = GetCharacterMovement();
+	// 현재 달리기 모드라면
+	if (movement->MaxWalkSpeed > walkSpeed)
+	{
+		// 걷기 속도로 전환
+		movement->MaxWalkSpeed = walkSpeed;
+	}
+	else
+	{
+		movement->MaxWalkSpeed = runSpeed;
+	}
 }
 
 void ATPSPlayer::InputFire()

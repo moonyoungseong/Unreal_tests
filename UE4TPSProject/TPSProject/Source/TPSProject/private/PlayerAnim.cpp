@@ -23,10 +23,18 @@ void UPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 		FVector forwardVector = player->GetActorForwardVector();
 		// 5. speed에 값 할당하기
 		speed = FVector::DotProduct(forwardVector, velocity);
+		// 6. 좌우 속도 할당하기
+		FVector rightVector = player->GetActorRightVector();
+		direction = FVector::DotProduct(rightVector, velocity);
 
 		// 플레이어가 현재 공중에 있는지 여부를 기억하고 싶다.
 		auto movement = player->GetCharacterMovement();
 		isInAir = movement->IsFalling();
 	}
+}
+
+void UPlayerAnim::PlayAttackAnim()
+{
+	Montage_Play(attackAnimMontage);
 }
 
