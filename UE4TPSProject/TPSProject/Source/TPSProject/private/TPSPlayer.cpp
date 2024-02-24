@@ -41,7 +41,7 @@ ATPSPlayer::ATPSPlayer()
 	// 4. 총 스켈레탈메시 컴포넌트 등록
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
 	// 4-1. 부모 컴포넌트를 Mesh 컴포넌트로 설정
-	gunMeshComp->SetupAttachment(GetMesh());
+	gunMeshComp->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 	// 4-2. 스켈레탈 메시 데이터 로드
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempGunMesh(TEXT("SkeletalMesh'/Game/FPWeapon/Mesh/SK_FPGun.SK_FPGun'"));
 	// 4-3 데이터 로드가 성공했다면
@@ -50,13 +50,14 @@ ATPSPlayer::ATPSPlayer()
 		// 4-4. 스켈레탈 메시 데이터 할당
 		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
 		// 4-5. 위치 조정하기
-		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
+		gunMeshComp->SetRelativeLocation(FVector(-17, 10, -3));
+		gunMeshComp->SetRelativeRotation(FRotator(0, 90, 0));
 	}
 
 	// 5. 스나이퍼건 컴포너트 등록
 	sniperGunComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SniperGunComp"));
 	// 5-1. 부모 컴포넌트를 Mesh 컴포넌트로 설정
-	sniperGunComp->SetupAttachment(GetMesh());
+	sniperGunComp->SetupAttachment(GetMesh(), TEXT("hand_rSocket"));
 	// 5-2. 스태틱메시 데이터 로드
 	ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("StaticMesh'/Game/SniperGun/sniper1.sniper1'"));
 	// 5-3. 데이터로드가 성공했다면
@@ -65,7 +66,8 @@ ATPSPlayer::ATPSPlayer()
 		// 5-4. 스태틱메시 데이터 할당
 		sniperGunComp->SetStaticMesh(TempSniperMesh.Object);
 		// 5-5. 위치 조정하기
-		sniperGunComp->SetRelativeLocation(FVector(-22, 55, 120));
+		sniperGunComp->SetRelativeLocation(FVector(-42, 7, 1));
+		sniperGunComp->SetRelativeRotation(FRotator(0, 90, 0));
 		// 5-6. 크기 조정하기
 		sniperGunComp->SetRelativeScale3D(FVector(0.15f));
 	}
