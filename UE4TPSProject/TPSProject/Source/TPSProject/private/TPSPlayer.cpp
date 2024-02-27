@@ -11,7 +11,7 @@
 #include <GameFramework/CharacterMovementComponent.h>
 #include "PlayerAnim.h"
 
-// Sets default values
+// Sets default values 생성자로 해당 블루프린트 정보를 작성해놓자.
 ATPSPlayer::ATPSPlayer()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
